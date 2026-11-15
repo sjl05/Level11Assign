@@ -1,0 +1,88 @@
+"""
+Level #11 Assignment – Video Game Catalog Manager
+IS 303 – Hilton
+A gaming website has provided a CSV file containing information about video games. The
+catalog needs to be reviewed, updated, and prepared for future use. Create a Python program that
+reads the provided video_games_raw.csv file and updates the catalog.
+Download video_games_raw.csv
+Your program should:
+• Read the CSV file using Pandas.
+• Ask the user for a specific row number to inspect.
+• Use .iloc[] to display information about the selected game.
+• Ask the user to enter a new status for that game, such as Backlog, Playing, Completed,
+or Dropped.
+• Use .at[] to update the selected game’s status.
+• Add a Recommended column to the panda.
+• Set Recommended to Yes for games that meet both of these criteria:
+o Rating is at least 8.
+o Price is $40 or less.
+• Set Recommended to No for all other games.
+• Use .query() to display the recommended games.
+• Save the updated data to a new file named video_games_cleaned.csv.
+The original CSV file should remain unchanged.
+The exact games displayed will depend on the information in the provided CSV file.
+Your program should demonstrate your understanding of:
+• .iloc[] for accessing a row by position
+• .at[] for changing one specific value
+• .loc[] for changing multiple rows
+• .query() for filtering data
+• .to_csv() for saving the updated DataFrame
+Submit your PUBLIC GitHub link through Canvas.
+Sample Session:
+VIDEO GAME CATALOG MANAGER
+Enter a row number to inspect: 4
+Selected Game:
+Title: Stardew Valley
+Platform: PC
+Genre: Simulation
+Rating: 8.8
+Current Status: Backlog
+Enter a new status:
+Completed
+Recommended Games:
+Title Platform Price Rating
+0 The Legend of Zelda: Breath of the Wild Switch 39.99 9.5
+2 Stardew Valley PC 14.99 8.8
+5 Minecraft PC 29.99 9.0
+The catalog has been updated.
+Saved as video_games_cleaned.csv.
+"""
+#imports
+import pandas as pd
+#global varibles
+statuses = ["backlog", "playing", "completed", "dropped"]
+#main code
+#query user for which information to use
+dfvgr = pd.read_csv("video_games_raw.csv")
+print("Video Game Catalog Manager")
+print("Enter 'q' to quit and see the reccomended games")
+while True:
+    try:
+        row_num = int(input("Enter a row to inspect information about that game: "))
+        print("Selected Game:")
+        print(f"Title: {dfvgr.iloc[row_num, 0]}")
+        print(f"Platform: {dfvgr.iloc[row_num, 1]}")
+        print(f"Genre: {dfvgr.iloc[row_num, 2]}")
+        print(f"Rating: {dfvgr.iloc[row_num, 5]}")
+        modify_yn = input("Do you want to modify the status of this game? ").strip().lower()
+        if modify_yn == "yes":
+            status_changed = False
+            while status_changed == False:
+                print("What do you want to change the status to?\nExamples: Backlog, Playing, Completed, Dropped")
+                status = input("New Status: ").strip().lower()
+                if status in statuses:
+                    dfvgr.at[row_num,"Status"] = status
+                    status_changed = True
+                elif status not in statuses:
+                    print("Please enter one of the above statuses")
+        elif modify_yn == "no":
+            pass
+
+    except KeyError:
+        pass
+    except ValueError:
+        pass
+    except:
+        pass
+
+#add the reccomended games and change the thing
