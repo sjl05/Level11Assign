@@ -51,13 +51,14 @@ Saved as video_games_cleaned.csv.
 import pandas as pd
 #global varibles
 statuses = ["backlog", "playing", "completed", "dropped"]
+reccomended = []
 #main code
 #query user for which information to use
 dfvgr = pd.read_csv("video_games_raw.csv")
 print("Video Game Catalog Manager")
 print("Enter 'q' to quit and see the reccomended games")
 while True:
-    #try:
+    try:
         print("Enter a row to inspect information about that game, row numbers start at 0.")
         row_num = input("Row: ")
         if row_num == 'q':
@@ -99,7 +100,6 @@ while True:
             else:
                 print("Please enter whether or not you want to modify the status of the game or enter 'q' to quit")
             print("")
-"""
     except IndexError:
         print("We don't have information for that row")
     except ValueError:
@@ -108,4 +108,10 @@ while True:
         print("Something went wrong, please try again.")
 
 #add the reccomended games and change the thing
-"""
+
+dfvgc = dfvgr.copy()
+dfvgc["Recommended"] = "No"
+dfvgc.loc[(dfvgc["Rating"] >= 8) & (dfvgc["Price"] <= 40.0), ["Recommended"]] = "Yes"
+print(dfvgc.query("Recommended == 'Yes'")[["Title", "Platform", "Price", "Rating"]])
+
+dfvgc.to_csv("video_games_cleaned.csv")
