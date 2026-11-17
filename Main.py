@@ -54,12 +54,11 @@ Saved as video_games_cleaned.csv.
 import pandas as pd
 #global varibles
 statuses = ["backlog", "playing", "completed", "dropped"]
-reccomended = []
 #main code
 #make a dataframe based off the csv
 dfvgr = pd.read_csv("video_games_raw.csv")
 print("Video Game Catalog Manager")
-print("Enter 'q' to quit and see the reccomended games")
+print("Enter 'q' to quit and see the recommended games")
 while True:
     try:
         #query the user for which row
@@ -121,4 +120,4 @@ print(dfvgc.query("Recommended == 'Yes'")[["Title", "Platform", "Price", "Rating
 dfvgc.to_csv("video_games_cleaned.csv", index=False)
 #let the user know what has been done
 print("The catalog has been updated") 
-print("The new catalog has bene saved to video_games_cleaned.csv")
+print("The new catalog has been saved to video_games_cleaned.csv")
