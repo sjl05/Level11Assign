@@ -104,20 +104,21 @@ while True:
             else:
                 print("Please enter whether or not you want to modify the status of the game.")
             print("")
-    except IndexError:
+    except IndexError: 
         print("We don't have information for that row")
     except ValueError:
         print("We don't recognize that input, please try again.")
-    except:
+    except: #catching all other errors
         print("Something went wrong, please try again.")
 
-#add the reccomended games and change the thing
-
+#make a copy of the dataframe
 dfvgc = dfvgr.copy()
-dfvgc["Recommended"] = "No"
-dfvgc.loc[(dfvgc["Rating"] >= 8) & (dfvgc["Price"] <= 40.0), ["Recommended"]] = "Yes"
-print(dfvgc.query("Recommended == 'Yes'")[["Title", "Platform", "Price", "Rating"]])
+dfvgc["Recommended"] = "No" #set all the rows in the new column "Recommend" to "No"
+dfvgc.loc[(dfvgc["Rating"] >= 8) & (dfvgc["Price"] <= 40.0), ["Recommended"]] = "Yes" #set the rows that meet the criteria to Yes
+print(dfvgc.query("Recommended == 'Yes'")[["Title", "Platform", "Price", "Rating"]]) #printing the specific output
 
+#puts the finished csv in a file
 dfvgc.to_csv("video_games_cleaned.csv", index=False)
-print("The catalog has been updated")
+#let the user know what has been done
+print("The catalog has been updated") 
 print("The new catalog has bene saved to video_games_cleaned.csv")
